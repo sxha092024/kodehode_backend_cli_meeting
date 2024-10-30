@@ -1,0 +1,6 @@
+.direnv/
+obj/
+bin/
+notes/
+
+*.db
