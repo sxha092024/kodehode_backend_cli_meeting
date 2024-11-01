@@ -18,7 +18,7 @@
         pkgs = nixpkgs.legacyPackages.${system};
         # pkgs = import nixpkgs {
         #   inherit system;
-        #   # config.allowUnfree = true; # not neccessary unless we need Rider in a dev shell
+        #   config.allowUnfree = true; # terraform, rider
         # };
 
         dotnetPkg = with pkgs.dotnetCorePackages;
@@ -35,10 +35,13 @@
           nativeBuildInputs = with pkgs; [
             dotnetPkg
             csharp-ls
+
+            omnisharp-roslyn
+
             # # Testing jetbrains rider IDE for C# now that it is 'free'
             # jetbrains.rider # Requires unstable channel (2024-10-30 and unfree)
             sqlite
-            mermaid-cli
+            mermaid-cli # graphs
           ];
           shellHook = ''
             export DOTNET_ROOT="${dotnetPkg}";

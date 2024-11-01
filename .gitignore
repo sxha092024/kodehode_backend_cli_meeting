@@ -1,4 +1,6 @@
 .direnv/
+.vscode/
+
 obj/
 bin/
 notes/
