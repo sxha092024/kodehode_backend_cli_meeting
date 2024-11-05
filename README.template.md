@@ -116,3 +116,5 @@ StatusEnum *-- Meeting : Status Field
 Name *-- UserModel : name field
 Meeting *-- UserModel : ParticipantTo field
 ```
+### Notes
+While Github is able to render embedded mermaid diagrams, a template is still used for non github hosted repositories
