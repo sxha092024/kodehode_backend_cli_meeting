@@ -1,10 +1,10 @@
 # CLI Meeting Planner - Kodehode backend task
 
+## Datamodell
+![diagram](./README-1.svg)
 
-## Optional
+## Optional - WIP
 The following diagram (or its [unprocessed Mermaid markup](./README.template.md)) contains an optional step in the main task.
 
-While the MVC pattern is *going* to be used extensively in future tasks, for a CLI application
-it complicates development, slows down productivity, and does not guarantee flexibility.
-The MVC pattern becomes more reasonable once business logic complexity grows. 
-![diagram](./README-1.svg)
+**N.B** While this diagram may exist it does not guarantee that the underlying implementation adheres to it.
+![diagram](./README-2.svg)

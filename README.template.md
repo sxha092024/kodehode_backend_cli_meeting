@@ -1,12 +1,52 @@
 # CLI Meeting Planner - Kodehode backend task
 
+## Datamodell
+```mermaid
+---
+title: Data models
+---
+classDiagram
+direction RL
+namespace Classes {
+    class Document {
+        +List~Meeting~ Meetings
+        +HashSet~User~ Users
 
-## Optional
+        +Document() Document
+        // TODO: FromFile() Document
+    }
+    class User {
+        -Guid Guid // auto initialized
+        -string Name
+
+        +User(string: name) User
+        +Guid.get() Guid
+        -AllowedName() bool
+        // TODO: +ParticipantTo() IEnumerable~Meeting~
+        // TODO: Deserialize +User(Guid: guid, string: name) User
+        // TODO: Deserialize +UpdateName()
+    }
+
+    class Meeting {
+        -Guid Guid // auto initialized
+        -DateTime OccursAt
+        -HashSet~User~ Participants
+        // TODO: -TimeSpan Duration
+
+        +Meeting() Meeting
+        +Guid.get() Guid
+        +Participants.get() HashSet~User~
+        +OccursAt.get() DateTime
+        // TODO: +Until() TimeSpan
+        // TODO: +TimeSpan.get()
+    }
+}
+```
+
+## Optional - WIP
 The following diagram (or its [unprocessed Mermaid markup](./README.template.md)) contains an optional step in the main task.
 
-While the MVC pattern is *going* to be used extensively in future tasks, for a CLI application
-it complicates development, slows down productivity, and does not guarantee flexibility.
-The MVC pattern becomes more reasonable once business logic complexity grows. 
+**N.B** While this diagram may exist it does not guarantee that the underlying implementation adheres to it.
 ```mermaid
 ---
 title: Meeting planner |  MVC diagram | Work In Progress
@@ -32,8 +72,7 @@ namespace UserMVC {
         -UserModel Model
         -UserView View
 
-        +LoadFromDatabase(Guid: userGuid) UserModel
-        +UpdateInDB(UserModel: user) void
+        +LoadUserFromStorage(Guid: userGuid) UserModel
 
         +DisplayAll() void
         +DisplayUser() void
@@ -50,22 +89,25 @@ namespace Structs_and_Enums {
         +Display() string
     }
     class Meeting {
-        +Guid GUID
+        -Guid guid
         -Datetime OccursAt
         -TimeSpan Duration
         -List~Guid : UserModel GUID~ Participants
         -StatusEnum Status
         
+        -Guid.init();
+        +Guid Guid.get()
         +TimeSpan Until()
         +OccursAt.get() DateTime
         +AllParticipants() List~UserModel~
     }
 
     class StatusEnum {
-        Valid
-        Invalid
-        Cancelled
+        Planned
+        Confirmed
+        Concluded
         Rescheduled
+        Cancelled
     }
 
 }

@@ -5,7 +5,7 @@
     flake-utils.url = "github:numtide/flake-utils";
     # NOTE: this CLI application is primitive enough to avoid the direct need for Rider,
     # however the pre-requisites to enable it in a dev-shell remain in place for easy access.
-    # nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable"; # Rider is only 'free' in channels newer than 24.05
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable"; # Rider is only 'free' in channels newer than 24.05
   };
 
   outputs = {
@@ -15,11 +15,11 @@
   }:
     flake-utils.lib.eachDefaultSystem (
       system: let
-        pkgs = nixpkgs.legacyPackages.${system};
-        # pkgs = import nixpkgs {
-        #   inherit system;
-        #   config.allowUnfree = true; # terraform, rider
-        # };
+        # pkgs = nixpkgs.legacyPackages.${system};
+        pkgs = import nixpkgs {
+          inherit system;
+          config.allowUnfree = true; # terraform, rider
+        };
 
         dotnetPkg = with pkgs.dotnetCorePackages;
         # NOTE: the first sdk in the list is the one whose cli utility is present in the environment
@@ -39,10 +39,13 @@
             omnisharp-roslyn
 
             # # Testing jetbrains rider IDE for C# now that it is 'free'
-            # jetbrains.rider # Requires unstable channel (2024-10-30 and unfree)
+            jetbrains.rider # Requires unstable channel (2024-10-30 and unfree)
             sqlite
             mermaid-cli # graphs
           ];
+
+          DOTNET_ROOT = builtins.toString dotnetPkg;
+          DOTNET_BIN = "${dotnetPkg}/bin/dotnet";
           shellHook = ''
             export DOTNET_ROOT="${dotnetPkg}";
             echo ".net root: '${dotnetPkg}'"

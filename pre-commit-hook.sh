@@ -1,4 +1,4 @@
-#!/bin/env sh
+#!/bin/env bash
 
 process_mermaid_document() {
   local file="$1"
